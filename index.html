@@ -1,96 +1,290 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fondant Queue Craft</title>
-<meta name="description" content="Read the bakery order, build the cake, and match every detail before the ticket expires. 50 levels of fondant crafting.">
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #1a0f15; color: #f5e6d3; line-height: 1.6; }
-  .hero { background: linear-gradient(135deg, #2a1018 0%, #1a0f15 100%); padding: 80px 20px 60px; text-align: center; }
-  .hero h1 { font-size: 44px; color: #eb94b3; margin-bottom: 12px; font-weight: 700; }
-  .hero .subtitle { font-size: 18px; color: #f5dcb8; margin-bottom: 32px; }
-  .hero .cta { display: inline-block; background: #eb94b3; color: #1a0f15; padding: 14px 36px; border-radius: 24px; text-decoration: none; font-weight: 600; font-size: 16px; }
-  .hero .cta:hover { background: #f5a8c5; }
-  .screenshots { max-width: 1100px; margin: 48px auto; padding: 0 20px; }
-  .screenshots h2 { text-align: center; font-size: 28px; margin-bottom: 28px; color: #eb94b3; }
-  .screenshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
-  .screenshot-grid img { width: 100%; height: auto; border-radius: 12px; border: 1px solid rgba(235,148,179,0.25); }
-  .about { max-width: 800px; margin: 56px auto; padding: 0 20px; }
-  .about h2 { font-size: 28px; color: #eb94b3; margin-bottom: 18px; }
-  .about p { font-size: 16px; color: #ddd0c0; margin-bottom: 14px; }
-  .howto { max-width: 800px; margin: 56px auto; padding: 0 20px; }
-  .howto h2 { font-size: 28px; color: #eb94b3; margin-bottom: 22px; }
-  .howto ol { padding-left: 22px; }
-  .howto li { font-size: 16px; color: #ddd0c0; margin-bottom: 12px; }
-  .support { max-width: 800px; margin: 56px auto; padding: 0 20px; }
-  .support h2 { font-size: 28px; color: #eb94b3; margin-bottom: 18px; }
-  .support p { font-size: 16px; color: #ddd0c0; }
-  .app-info { max-width: 800px; margin: 56px auto; padding: 0 20px; }
-  .app-info h2 { font-size: 28px; color: #eb94b3; margin-bottom: 18px; }
-  .app-info table { width: 100%; border-collapse: collapse; }
-  .app-info td { padding: 10px 14px; border-bottom: 1px solid rgba(235,148,179,0.18); font-size: 15px; }
-  .app-info td:first-child { color: #f5dcb8; font-weight: 600; width: 40%; }
-  footer { text-align: center; padding: 32px 20px; background: #0f070b; color: #8a7a6a; font-size: 13px; }
-  footer a { color: #eb94b3; text-decoration: none; }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fondant Queue Craft</title>
+  <meta name="description" content="A bakery cake matching puzzle. Read each order, pick the right base, cream, filling, and decor, then submit before the ticket expires. 50 levels.">
+  <style>
+    :root {
+      --bg: #1a0f15;
+      --panel: #2a1018;
+      --panel-alt: #341820;
+      --text: #f5e6d3;
+      --muted: #c4b0a0;
+      --accent: #eb94b3;
+      --accent-2: #f5dcb8;
+      --success: #38b46e;
+      --danger: #de4640;
+      --line: rgba(255,255,255,.14);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    main { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 80px 20px 60px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: 52px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero .subtitle {
+      font-size: 20px;
+      color: var(--accent);
+      margin-bottom: 18px;
+    }
+    .hero .intro {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    /* Screenshots */
+    .screens { padding: 40px 0; }
+    .screens h2, section h2 {
+      font-size: 30px;
+      font-weight: 700;
+      margin-bottom: 28px;
+      text-align: center;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .shot-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .shot-card img { width: 100%; display: block; }
+    .shot-card h3 { font-size: 15px; padding: 12px 14px 4px; }
+    .shot-card p { font-size: 13px; color: var(--muted); padding: 0 14px 14px; }
+
+    /* About */
+    .about { padding: 40px 0; }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 28px;
+    }
+    .card p { margin-bottom: 14px; color: var(--muted); }
+    .card p:last-child { margin-bottom: 0; }
+    .card strong { color: var(--text); }
+
+    /* How to Play */
+    .howto { padding: 40px 0; }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .feature-card {
+      background: var(--panel-alt);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 22px;
+    }
+    .step {
+      display: inline-block;
+      width: 32px; height: 32px;
+      line-height: 32px;
+      text-align: center;
+      border-radius: 50%;
+      background: var(--accent);
+      color: var(--bg);
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+    .feature-card h3 { font-size: 17px; margin-bottom: 8px; }
+    .feature-card p { font-size: 14px; color: var(--muted); }
+
+    /* Support */
+    .support { padding: 40px 0; }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    /* App Info */
+    .info { padding: 40px 0; }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
+    }
+    .info-grid > div {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+    .info-grid .label {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-bottom: 4px;
+    }
+    .info-grid .value { font-size: 15px; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 30px 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer > div { margin: 4px 0; }
+  </style>
 </head>
 <body>
-<div class="hero">
-  <h1>Fondant Queue Craft</h1>
-  <p class="subtitle">Read the order. Build the cake. Match every detail.</p>
-  <a class="cta" href="#about">Learn More</a>
-</div>
+  <main>
+    <header class="hero">
+      <div class="badge">Games / Puzzle / Strategy</div>
+      <h1>Fondant Queue Craft</h1>
+      <p class="subtitle">Read the order. Build the cake. Match every detail.</p>
+      <p class="intro">A bakery cake matching puzzle. Read each order ticket, pick the right base, cream, filling, and decoration, then submit before the timer expires. 50 levels of escalating rush. No internet, no ads.</p>
+    </header>
 
-<div class="screenshots">
-  <h2>Screenshots</h2>
-  <div class="screenshot-grid">
-    <img src="screenshots_65/01_menu.jpg" alt="Main Menu">
-    <img src="screenshots_65/02_gameplay.jpg" alt="Gameplay">
-    <img src="screenshots_65/03_cake_build.jpg" alt="Building a Cake">
-    <img src="screenshots_65/04_order_match.jpg" alt="Matching an Order">
-  </div>
-</div>
+    <section class="screens">
+      <h2>Screenshots</h2>
+      <div class="grid">
+        <div class="shot-card">
+          <img src="screenshots_65/01_menu.jpg" alt="Main menu of Fondant Queue Craft">
+          <h3>Main Menu</h3>
+          <p>Choose Start Order, Levels, or Settings from the bakery home screen.</p>
+        </div>
+        <div class="shot-card">
+          <img src="screenshots_65/02_gameplay.jpg" alt="Core cake building gameplay">
+          <h3>Order Gameplay</h3>
+          <p>Read the order card, watch countdown bars, and build the matching cake.</p>
+        </div>
+        <div class="shot-card">
+          <img src="screenshots_65/03_cake_build.jpg" alt="Building a cake with category tabs">
+          <h3>Build a Cake</h3>
+          <p>Switch between Base, Cream, Filling, and Decor tabs to select each layer.</p>
+        </div>
+        <div class="shot-card">
+          <img src="screenshots_65/04_order_match.jpg" alt="Submitting a cake to match an order">
+          <h3>Match the Order</h3>
+          <p>Submit the cake to complete the ticket before it expires and move to the next.</p>
+        </div>
+      </div>
+    </section>
 
-<div class="about" id="about">
-  <h2>About</h2>
-  <p>Fondant Queue Craft is a bakery puzzle where every ticket asks for a specific cake: a base, a cream, a filling, and a decoration. Read the order card, switch between the four category tabs, tap the option that matches the ticket, and submit the cake before the timer runs out.</p>
-  <p>Tickets keep arriving while you work. As levels progress, more tickets can stack on screen at once, the per-order timer shrinks, and fewer expired tickets are allowed. Stay calm, match the right cake to the right ticket, and keep the bakery moving.</p>
-</div>
+    <section class="about">
+      <h2>About Fondant Queue Craft</h2>
+      <div class="card">
+        <p><strong>Fondant Queue Craft</strong> is a bakery puzzle where every ticket asks for a specific cake. Each order lists a base, a cream, a filling, and a decoration. Read the ticket, switch between the four category tabs, tap the matching option, and submit the cake before the countdown bar runs out.</p>
+        <p>The game spans <strong>50 levels</strong> with progressive difficulty. Levels 1&ndash;4 teach one category at a time (Base, Cream, Filling, Decor). From level 7 onward, all four categories are required for every ticket. More tickets stack on screen at once, the per-order timer shrinks, and fewer expired tickets are allowed.</p>
+        <p>Six bases (Chocolate, Strawberry, Matcha, Cheese, Rainbow, Tiramisu), six creams (White, Pink, Blue, Yellow, Green, Cocoa), four fillings (Vanilla, Berry, Nuts, Custard), and five decorations (Candles, Flowers, Stars, Hearts, Gold) give every ticket a unique combination. Up to four tickets can be active simultaneously, each with its own countdown timer.</p>
+      </div>
+    </section>
 
-<div class="howto">
-  <h2>How to Play</h2>
-  <ol>
-    <li>Tap Start Order on the main menu to begin the next unlocked level.</li>
-    <li>Read the order card at the top: it lists the base, cream, filling, and decoration each ticket needs.</li>
-    <li>Tap a category tab (Base, Cream, Filling, Decor) to see the available options.</li>
-    <li>Tap the option that matches one of the open tickets. The cake preview updates as you build.</li>
-    <li>When the cake matches a ticket, tap Submit Cake to complete the order and move to the next.</li>
-    <li>Complete enough orders before too many tickets expire to finish the level and unlock the next one.</li>
-  </ol>
-</div>
+    <section class="howto">
+      <h2>How to Play</h2>
+      <div class="features">
+        <div class="feature-card">
+          <span class="step">1</span>
+          <h3>Start a Level</h3>
+          <p>Tap Start Order on the main menu to continue from your highest unlocked level, or visit Levels to pick any unlocked stage.</p>
+        </div>
+        <div class="feature-card">
+          <span class="step">2</span>
+          <h3>Read the Order Card</h3>
+          <p>The order card at the top shows open tickets. Each ticket lists the base, cream, filling, and decoration it needs, with a countdown bar.</p>
+        </div>
+        <div class="feature-card">
+          <span class="step">3</span>
+          <h3>Pick a Category</h3>
+          <p>Tap the Base, Cream, Filling, or Decor tab at the bottom to see the available options in that category.</p>
+        </div>
+        <div class="feature-card">
+          <span class="step">4</span>
+          <h3>Tap the Matching Option</h3>
+          <p>Select the option that matches one of the open tickets. The cake preview in the center updates as you build.</p>
+        </div>
+        <div class="feature-card">
+          <span class="step">5</span>
+          <h3>Submit the Cake</h3>
+          <p>Tap Submit Cake to check the cake against all open tickets. A matching ticket is completed and the next one arrives.</p>
+        </div>
+        <div class="feature-card">
+          <span class="step">6</span>
+          <h3>Beat the Clock</h3>
+          <p>Complete enough orders before too many tickets expire to finish the level and unlock the next one.</p>
+        </div>
+      </div>
+    </section>
 
-<div class="support">
-  <h2>Support</h2>
-  <p>For help or feedback, contact <a href="mailto:croitorzamkov@gmail.com">croitorzamkov@gmail.com</a></p>
-</div>
+    <section class="support">
+      <h2>Support</h2>
+      <div class="feature-grid">
+        <div class="card">
+          <h3>How do I play?</h3>
+          <p>Read the order ticket, switch to the right category tab, tap the matching option, and submit the cake before the countdown bar empties. Early levels teach one category at a time.</p>
+        </div>
+        <div class="card">
+          <h3>Does it need internet?</h3>
+          <p>No. Fondant Queue Craft is fully offline. No ads, no in-app purchases, no accounts, no analytics, no tracking.</p>
+        </div>
+        <div class="card">
+          <h3>Need help?</h3>
+          <p>Visit the App Store product page for Fondant Queue Craft to contact support after release.</p>
+        </div>
+      </div>
+    </section>
 
-<div class="app-info">
-  <h2>App Information</h2>
-  <table>
-    <tr><td>App Name</td><td>Fondant Queue Craft</td></tr>
-    <tr><td>Bundle ID</td><td>com.rosewood.fondantqueuecraft.game</td></tr>
-    <tr><td>Version</td><td>1.0</td></tr>
-    <tr><td>Category</td><td>Games / Puzzle</td></tr>
-    <tr><td>Age Rating</td><td>4+</td></tr>
-    <tr><td>Device</td><td>iPhone (Portrait only)</td></tr>
-    <tr><td>Privacy Policy</td><td><a href="privacy.html">View Privacy Policy</a></td></tr>
-  </table>
-</div>
+    <section class="info">
+      <h2>App Information</h2>
+      <div class="info-grid">
+        <div><span class="label">Genre</span><div class="value">Games / Puzzle</div></div>
+        <div><span class="label">Compatibility</span><div class="value">iOS 15.0 or later</div></div>
+        <div><span class="label">Device Support</span><div class="value">iPhone only</div></div>
+        <div><span class="label">Age Rating</span><div class="value">4+</div></div>
+        <div><span class="label">Version</span><div class="value">1.0</div></div>
+        <div><span class="label">Language</span><div class="value">English</div></div>
+        <div><span class="label">Privacy</span><div class="value">No data collected</div></div>
+        <div><span class="label">Bundle ID</span><div class="value">com.rosewood.fondantqueuecraft.game</div></div>
+      </div>
+    </section>
+  </main>
 
-<footer>
-  <p>&copy; 2026 Rosewood Studio. <a href="privacy.html">Privacy Policy</a></p>
-</footer>
+  <footer>
+    <div>&copy; 2026 Fondant Queue Craft. All rights reserved.</div>
+    <div><a href="/privacy.html">Privacy Policy</a></div>
+  </footer>
 </body>
 </html>
